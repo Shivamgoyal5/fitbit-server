@@ -4,7 +4,7 @@ const session = require("express-session");
 const cors = require("cors");
 
 const app = express();
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ origin: "https://fitbit-app-pwpk.vercel.app", credentials: true }));
 app.use(session({ secret: "secret", resave: false, saveUninitialized: true }));
 
 const CLIENT_ID = "23QCJS";
