@@ -124,6 +124,11 @@ app.get("/callback", async (req, res) => {
     }
 });
 
+app.get("/", (req, res) => {
+    res.send("Backend is running!");
+});
+
+
 // Step 2: Fetch Fitbit User Profile
 app.get("/profile", async (req, res) => {
     const accessToken = req.session.accessToken;
