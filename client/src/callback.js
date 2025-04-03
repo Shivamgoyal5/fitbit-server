@@ -10,7 +10,7 @@ function Callback() {
         const code = searchParams.get("code");
 
         if (code) {
-            axios.get(`http://localhost:5000/callback?code=${code}`)
+            axios.get(`https://fitbit-app-backend.vercel.app/callback?code=${code}`)
                 .then(response => {
                     localStorage.setItem("user_id", response.data.user_id);
                     navigate("/profile");
