@@ -5,7 +5,7 @@ function Profile() {
     const [userProfile, setUserProfile] = useState(null);
 
     useEffect(() => {
-        axios.get("http://localhost:5000/profile")
+        axios.get("https://fitbit-app-backend.vercel.app/profile")
             .then(response => setUserProfile(response.data))
             .catch(error => console.error("Error fetching profile:", error));
     }, []);
