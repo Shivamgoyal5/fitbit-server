@@ -16,9 +16,6 @@ function Profile() {
             {userProfile ? (
                 <div>
                     <h2>{userProfile.user.fullName}</h2>
-                    <img src={userProfile.user.avatar} alt="Avatar" />
-                    <p>Age: {userProfile.user.age}</p>
-                    <p>Gender: {userProfile.user.gender}</p>
                 </div>
             ) : (
                 <p>Loading...</p>
