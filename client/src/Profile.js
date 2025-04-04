@@ -5,7 +5,8 @@ function Profile() {
     const [stepsData, setStepsData] = useState(null);
 
     useEffect(() => {
-        axios.get("https://fitbit-app-backend.vercel.app/profile")
+        axios.get("https://fitbit-app-backend.vercel.app/profile", {
+            withCredentiala: true })
             .then(response => setStepsData(response.data))
             .catch(error => console.error("Error fetching profile:", error));
     }, []);
