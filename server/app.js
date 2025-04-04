@@ -118,6 +118,7 @@ app.get("/callback", async (req, res) => {
         req.session.userId = tokenResponse.data.user_id;
         
         res.json({ user_id: tokenResponse.data.user_id });
+        console.log(req.session.accessToken );
     } catch (error) {
         console.error("Error exchanging code for token:", error.response?.data || error.message);
         res.status(500).send("Authentication failed");
