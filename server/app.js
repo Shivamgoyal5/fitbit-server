@@ -130,19 +130,24 @@ app.get("/", (req, res) => {
 
 
 // Step 2: Fetch Fitbit User Profile
+// Step: Fetch Fitbit Step Data
 app.get("/profile", async (req, res) => {
     const accessToken = req.session.accessToken;
+    const userId = req.session.userId || "CJJ9T6"; // or use '-' for current user
+
     if (!accessToken) return res.status(401).send("Not authenticated");
 
     try {
-        const userProfile = await axios.get("https://api.fitbit.com/1/user/-/profile.json", {
-            headers: { "Authorization": `Bearer ${accessToken}` }
+        const response = await axios.get(`https://api.fitbit.com/1/user/${userId}/activities/steps/date/today/today.json`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
         });
 
-        res.json(userProfile.data);
+        res.json(response.data);
     } catch (error) {
-        console.error("Error fetching user profile:", error.response?.data || error.message);
-        res.status(500).send("Error fetching user profile");
+        console.error("Error fetching steps data:", error.response?.data || error.message);
+        res.status(500).send("Error fetching steps data");
     }
 });
 
