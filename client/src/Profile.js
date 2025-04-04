@@ -2,20 +2,20 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function Profile() {
-    const [userProfile, setUserProfile] = useState(null);
+    const [stepsData, setStepsData] = useState(null);
 
     useEffect(() => {
         axios.get("https://fitbit-app-backend.vercel.app/profile")
-            .then(response => setUserProfile(response.data))
+            .then(response => setStepsData(response.data))
             .catch(error => console.error("Error fetching profile:", error));
     }, []);
 
     return (
         <div style={{ textAlign: "center", marginTop: "50px" }}>
-            <h1>User Profile</h1>
-            {userProfile ? (
+            <h1>Step Count</h1>
+            {stepsData ? (
                 <div>
-                    <h2>{userProfile.user.fullName}</h2>
+                    <h2>Steps Today: {stepsData["activities-steps"]?.[0]?.value || "N/A"}</h2>
                 </div>
             ) : (
                 <p>Loading...</p>
