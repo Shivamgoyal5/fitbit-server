@@ -254,7 +254,7 @@ app.get("/callback", async (req, res) => {
         const tokenResponse = await axios.post(
             "https://api.fitbit.com/oauth2/token",
             new URLSearchParams({
-                client_id: CLIENT_ID,
+                // client_id: CLIENT_ID,
                 grant_type: "authorization_code",
                 redirect_uri: REDIRECT_URI,
                 code: code
