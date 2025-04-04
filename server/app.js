@@ -92,7 +92,7 @@ app.use(session({
 
 const CLIENT_ID = "23QCJS";
 const CLIENT_SECRET = "be2b993a4aa0fa2a9b8c23f0c1749a6e";
-const REDIRECT_URI = "https://localhost:3000/callback";
+const REDIRECT_URI = "https://fitbit-app-frontend.vercel.app/callback";
 
 // Step 1: Handle Fitbit OAuth Callback
 app.get("/callback", async (req, res) => {
