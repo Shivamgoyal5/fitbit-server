@@ -176,20 +176,15 @@
 
 
 
-
-
-
-
-
 const express = require("express");
 const axios = require("axios");
 const session = require("express-session");
 const cors = require("cors");
-const Buffer = require("buffer").Buffer;
+const { Buffer } = require("buffer");
 
 const app = express();
 
-// Environment variables (consider using dotenv in production)
+// Constants (You should use dotenv in real deployment)
 const CLIENT_ID = "23QCJS";
 const CLIENT_SECRET = "be2b993a4aa0fa2a9b8c23f0c1749a6e";
 const REDIRECT_URI = "https://fitbit-app-frontend.vercel.app/callback";
@@ -199,7 +194,7 @@ const FRONTEND_ORIGIN = "https://fitbit-app-frontend.vercel.app";
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Enhanced CORS configuration
+// CORS setup
 app.use(cors({
     origin: FRONTEND_ORIGIN,
     credentials: true,
@@ -207,7 +202,6 @@ app.use(cors({
     allowedHeaders: "Content-Type,Authorization,X-Requested-With"
 }));
 
-// Handle preflight requests
 app.options("*", cors({
     origin: FRONTEND_ORIGIN,
     credentials: true,
@@ -215,32 +209,32 @@ app.options("*", cors({
     allowedHeaders: "Content-Type,Authorization,X-Requested-With"
 }));
 
-// Enhanced session configuration
+// Session setup
 app.use(session({
     name: "fitbit.sid",
     secret: "supersecretkey",
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: process.env.NODE_ENV === "production", // true in production with HTTPS
+        secure: true, // works with HTTPS
         httpOnly: true,
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        sameSite: "none", // allow cross-site cookies (important for Vercel)
         maxAge: 24 * 60 * 60 * 1000 // 24 hours
     }
 }));
 
-// Health check endpoint
+// Test route
 app.get("/", (req, res) => {
     res.send("Fitbit OAuth Server is running!");
 });
 
-// Fitbit OAuth callback endpoint
+// Callback route
 app.get("/callback", async (req, res) => {
     try {
         const { code, error } = req.query;
-        
+
         if (error) {
-            console.error("Fitbit OAuth error:", error);
+            console.error("OAuth error:", error);
             return res.redirect(`${FRONTEND_ORIGIN}/error?message=${encodeURIComponent(error)}`);
         }
 
@@ -250,11 +244,10 @@ app.get("/callback", async (req, res) => {
 
         console.log("Received authorization code:", code);
 
-        // Exchange code for tokens
+        // Exchange code for access token
         const tokenResponse = await axios.post(
             "https://api.fitbit.com/oauth2/token",
             new URLSearchParams({
-                // client_id: CLIENT_ID,
                 grant_type: "authorization_code",
                 redirect_uri: REDIRECT_URI,
                 code: code
@@ -262,59 +255,53 @@ app.get("/callback", async (req, res) => {
             {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
-                    "Authorization": `Basic ${Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64")}`
+                    "Authorization": "Basic " + Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64")
                 }
             }
         );
 
-        // Store tokens in session
-        req.session.accessToken = tokenResponse.data.access_token;
-        req.session.refreshToken = tokenResponse.data.refresh_token;
-        req.session.userId = tokenResponse.data.user_id;
-        req.session.tokenExpires = Date.now() + (tokenResponse.data.expires_in * 1000);
+        const data = tokenResponse.data;
 
-        console.log("Successfully obtained tokens for user:", tokenResponse.data.user_id);
+        // Save tokens to session
+        req.session.accessToken = data.access_token;
+        req.session.refreshToken = data.refresh_token;
+        req.session.userId = data.user_id;
+        req.session.tokenExpires = Date.now() + (data.expires_in * 1000);
 
-        // Save session before responding
+        console.log("Successfully obtained tokens for user:", data.user_id);
+
         req.session.save(err => {
             if (err) {
-                console.error("Session save error:", err);
-                return res.status(500).json({ error: "Failed to save session" });
+                console.error("Failed to save session:", err);
+                return res.status(500).json({ error: "Session save error" });
             }
 
-            // Respond with success (you could redirect to frontend here)
-            res.json({
-                success: true,
-                user_id: tokenResponse.data.user_id,
-                expires_in: tokenResponse.data.expires_in
-            });
+            // Redirect or respond
+            res.redirect(`${FRONTEND_ORIGIN}/profile`);
         });
 
-    } catch (error) {
-        console.error("OAuth callback error:", error.response?.data || error.message);
-        
-        const errorMessage = error.response?.data?.errors?.[0]?.message || "Authentication failed";
+    } catch (err) {
+        console.error("Token exchange failed:", err.response?.data || err.message);
         res.status(500).json({ 
-            error: errorMessage,
-            details: error.response?.data || null
+            error: "Failed to obtain access token",
+            details: err.response?.data || null
         });
     }
 });
 
-// Profile data endpoint
+// Profile route
 app.get("/profile", async (req, res) => {
     try {
         const { accessToken, userId } = req.session;
 
-        if (!accessToken) {
+        if (!accessToken || !userId) {
             return res.status(401).json({ error: "Not authenticated" });
         }
 
         console.log("Fetching profile data for user:", userId);
 
-        // Get user profile
         const profileResponse = await axios.get(
-            `https://api.fitbit.com/1/user/${userId || '-'}/profile.json`,
+            `https://api.fitbit.com/1/user/${userId}/profile.json`,
             {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
@@ -324,56 +311,11 @@ app.get("/profile", async (req, res) => {
 
         res.json(profileResponse.data);
 
-    } catch (error) {
-        console.error("Profile fetch error:", error.response?.data || error.message);
-        res.status(500).json({ 
+    } catch (err) {
+        console.error("Failed to fetch profile:", err.response?.data || err.message);
+        res.status(500).json({
             error: "Failed to fetch profile",
-            details: error.response?.data || null
+            details: err.response?.data || null
         });
     }
-});
-
-// Activity data endpoint
-app.get("/activities/steps", async (req, res) => {
-    try {
-        const { accessToken, userId } = req.session;
-        const { date = "today", period = "1d" } = req.query;
-
-        if (!accessToken) {
-            return res.status(401).json({ error: "Not authenticated" });
-        }
-
-        console.log("Fetching step data for user:", userId);
-
-        const response = await axios.get(
-            `https://api.fitbit.com/1/user/${userId || '-'}/activities/steps/date/${date}/${period}.json`,
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            }
-        );
-
-        res.json(response.data);
-
-    } catch (error) {
-        console.error("Steps fetch error:", error.response?.data || error.message);
-        res.status(500).json({ 
-            error: "Failed to fetch steps data",
-            details: error.response?.data || null
-        });
-    }
-});
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error("Server error:", err);
-    res.status(500).json({ error: "Internal server error" });
-});
-
-// Server startup
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    console.log(`Fitbit OAuth redirect URI: ${REDIRECT_URI}`);
 });
