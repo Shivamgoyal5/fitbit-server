@@ -10,14 +10,16 @@ function Callback() {
         const code = searchParams.get("code");
 
         if (code) {
-            axios.get(`https://fitbit-app-backend.vercel.app/callback?code=${code}`)
-                .then(response => {
-                    localStorage.setItem("user_id", response.data.user_id);
-                    navigate("/profile");
-                })
-                .catch(error => {
-                    console.error("Error exchanging code for token", error);
-                });
+            axios.get(`https://fitbit-app-backend.vercel.app/callback?code=${code}` , {
+                withCredentials: true
+            })
+            .then(response => {
+                localStorage.setItem("user_id", response.data.user_id);
+                navigate("/profile");
+            })
+            .catch(error => {
+                console.error("Error exchanging code for token", error);
+            });
         }
     }, [searchParams, navigate]);
 
