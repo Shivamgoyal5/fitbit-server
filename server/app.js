@@ -114,53 +114,7 @@ const CLIENT_ID = "23QCJS";
 const CLIENT_SECRET = "be2b993a4aa0fa2a9b8c23f0c1749a6e";
 const REDIRECT_URI = "https://fitbit-app-frontend.vercel.app/callback";
 
-// Step 1: Handle Fitbit OAuth Callback
-app.get("/callback", async (req, res) => {
-    const code = req.query.code;
-    console.log("code", code);
     if (!code) return res.status(400).send("Authorization code not found");
-
-    try {
-        const tokenResponse = await axios.post("https://api.fitbit.com/oauth2/token",
-            new URLSearchParams({
-                client_id: CLIENT_ID,
-                grant_type: "authorization_code",
-                redirect_uri: REDIRECT_URI,
-                code: code
-            }), {
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                    "Authorization": "Basic " + Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64")
-                }
-            });
-
-        // Save session data
-        req.session.accessToken = tokenResponse.data.access_token;
-        req.session.userId = tokenResponse.data.user_id;
-        
-        // Save the session before sending response
-        req.session.save(err => {
-            if (err) {
-                console.error("Session save error:", err);
-                return res.status(500).send("Session error");
-            }
-            
-            // Now send the response
-            res.json({ 
-                user_id: tokenResponse.data.user_id,
-                access_token: tokenResponse.data.access_token // Optional: send token to frontend if needed
-            });
-        });
-            
-    } catch (error) {
-        console.error("Error exchanging code for token:", error.response?.data || error.message);
-        res.status(500).send("Authentication failed");
-    }
-});
-
-app.get("/", (req, res) => {
-    res.send("Backend is running!");
-});
 
 
 // Step 2: Fetch Fitbit User Profile
@@ -186,12 +140,6 @@ app.get("/profile", async (req, res) => {
 });
 
 app.listen(process.env.PORT || 5000, () => console.log("Server running on http://localhost:5000"));
-
-
-
-
-
-
 
 
 
