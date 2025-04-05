@@ -91,12 +91,23 @@ app.use(cors({
 //     res.sendStatus(200);
 // });
 
+
+
+
+app.options("*", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "https://fitbit-app-frontend.vercel.app");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.sendStatus(200);
+});
+
 // Configure Sessions
 app.use(session({
     secret: "supersecretkey",
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: true }  // Change to true if using HTTPS
+    cookie: { secure: true,sameSite:"None" }  // Change to true if using HTTPS
 }));
 
 const CLIENT_ID = "23QCJS";
