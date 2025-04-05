@@ -123,7 +123,7 @@ app.get("/callback", async (req, res) => {
     try {
         const tokenResponse = await axios.post("https://api.fitbit.com/oauth2/token",
             new URLSearchParams({
-                client_id: CLIENT_ID,  // ✅ Fix: Add this
+                client_id: CLIENT_ID,
                 grant_type: "authorization_code",
                 redirect_uri: REDIRECT_URI,
                 code: code
@@ -134,16 +134,23 @@ app.get("/callback", async (req, res) => {
                 }
             });
 
+        // Save session data
         req.session.accessToken = tokenResponse.data.access_token;
         req.session.userId = tokenResponse.data.user_id;
         
-        res.json({ user_id: tokenResponse.data.user_id });
-
+        // Save the session before sending response
+        req.session.save(err => {
+            if (err) {
+                console.error("Session save error:", err);
+                return res.status(500).send("Session error");
+            }
             
-        const accessToken = req.session.accessToken;
-        console.log(req.session.accessToken );
-        if (!accessToken) return res.status(401).send("Not authenticated");
-
+            // Now send the response
+            res.json({ 
+                user_id: tokenResponse.data.user_id,
+                access_token: tokenResponse.data.access_token // Optional: send token to frontend if needed
+            });
+        });
             
     } catch (error) {
         console.error("Error exchanging code for token:", error.response?.data || error.message);
