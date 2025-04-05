@@ -83,20 +83,20 @@ app.use(cors({
     allowedHeaders: "Content-Type,Authorization"
 }));
 
-// Handle preflight requests
-app.options("*", (req, res) => {
-    res.header("Access-Control-Allow-Origin", "https://fitbit-app-frontend.vercel.app");
-    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.sendStatus(200);
-});
+// // Handle preflight requests
+// app.options("*", (req, res) => {
+//     res.header("Access-Control-Allow-Origin", "https://fitbit-app-frontend.vercel.app");
+//     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+//     res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//     res.sendStatus(200);
+// });
 
 // Configure Sessions
 app.use(session({
     secret: "supersecretkey",
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }  // Change to true if using HTTPS
+    cookie: { secure: true }  // Change to true if using HTTPS
 }));
 
 const CLIENT_ID = "23QCJS";
