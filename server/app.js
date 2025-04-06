@@ -482,8 +482,9 @@ const express = require("express");
 const axios = require("axios");
 const session = require("express-session");
 const cors = require("cors");
-
-const app = express();
+const jwt = require('jsonwebtoken');
+// const app = express();
+app.use(express.json());
 
 app.use(cors({
     origin: "https://fitbit-app-frontend.vercel.app",
@@ -532,9 +533,48 @@ const CLIENT_SECRET = "be2b993a4aa0fa2a9b8c23f0c1749a6e";
 const REDIRECT_URI = "https://fitbit-app-frontend.vercel.app/callback";
 
 // Step 1: Handle Fitbit OAuth Callback
+// app.get("/callback", async (req, res) => {
+//     const code = req.query.code;
+//     console.log("code", code);
+//     if (!code) return res.status(400).send("Authorization code not found");
+
+//     try {
+//         const tokenResponse = await axios.post("https://api.fitbit.com/oauth2/token",
+//             new URLSearchParams({
+//                 client_id: CLIENT_ID,
+//                 grant_type: "authorization_code",
+//                 redirect_uri: REDIRECT_URI,
+//                 code: code
+//             }), {
+//                 headers: {
+//                     "Content-Type": "application/x-www-form-urlencoded",
+//                     "Authorization": "Basic " + Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64")
+//                 }
+//             });
+
+//         // Store tokens in session
+//         req.session.accessToken = tokenResponse.data.access_token;
+//         req.session.refreshToken = tokenResponse.data.refresh_token;
+//         req.session.userId = tokenResponse.data.user_id;
+        
+//         // Redirect or send response
+//         res.json({ 
+//             success: true,
+//             user_id: tokenResponse.data.user_id,
+//             access_token: tokenResponse.data.access_token
+//         });
+            
+//     } catch (error) {
+//         console.error("Error exchanging code for token:", error.response?.data || error.message);
+//         res.status(500).json({ 
+//             error: "Authentication failed",
+//             details: error.response?.data || error.message
+//         });
+//     }
+// });
+
 app.get("/callback", async (req, res) => {
     const code = req.query.code;
-    console.log("code", code);
     if (!code) return res.status(400).send("Authorization code not found");
 
     try {
@@ -551,26 +591,28 @@ app.get("/callback", async (req, res) => {
                 }
             });
 
-        // Store tokens in session
-        req.session.accessToken = tokenResponse.data.access_token;
-        req.session.refreshToken = tokenResponse.data.refresh_token;
-        req.session.userId = tokenResponse.data.user_id;
-        
-        // Redirect or send response
+        // Create JWT token
+        const token = jwt.sign(
+            {
+                userId: tokenResponse.data.user_id,
+                accessToken: tokenResponse.data.access_token
+            },
+            process.env.JWT_SECRET || "your_jwt_secret",
+            { expiresIn: '1h' }
+        );
+
         res.json({ 
             success: true,
-            user_id: tokenResponse.data.user_id,
-            access_token: tokenResponse.data.access_token
+            token: token,
+            user_id: tokenResponse.data.user_id
         });
             
     } catch (error) {
-        console.error("Error exchanging code for token:", error.response?.data || error.message);
-        res.status(500).json({ 
-            error: "Authentication failed",
-            details: error.response?.data || error.message
-        });
+        console.error("Error:", error.response?.data || error.message);
+        res.status(500).json({ error: "Authentication failed" });
     }
 });
+
 
 
 app.get("/", (req, res) => {
@@ -579,30 +621,56 @@ app.get("/", (req, res) => {
 
 // Step 2: Fetch Fitbit User Profile
 // Step: Fetch Fitbit Step Data
-app.get("/profile", async (req, res) => {
-    console.log('Profile endpoint session:', req.session);
+// app.get("/profile", async (req, res) => {
+//     console.log('Profile endpoint session:', req.session);
     
-    if (!req.session.accessToken) {
-        return res.status(401).json({ 
-            error: "Not authenticated",
-            sessionData: req.session // For debugging
-        });
+//     if (!req.session.accessToken) {
+//         return res.status(401).json({ 
+//             error: "Not authenticated",
+//             sessionData: req.session // For debugging
+//         });
+//     }
+
+//     try {
+//         const response = await axios.get(
+//             `https://api.fitbit.com/1/user/${req.session.userId}/activities/steps/date/today/today.json`, 
+//             {
+//                 headers: { Authorization: `Bearer ${req.session.accessToken}` }
+//             }
+//         );
+//         res.json(response.data);
+//     } catch (error) {
+//         console.error("Fitbit API error:", error.response?.data || error.message);
+//         res.status(500).json({
+//             error: "Error fetching steps data",
+//             fitbitError: error.response?.data
+//         });
+//     }
+// });
+
+app.get("/profile", async (req, res) => {
+    const authHeader = req.headers.authorization;
+    
+    if (!authHeader) {
+        return res.status(401).json({ error: "No token provided" });
     }
 
+    const token = authHeader.split(' ')[1];
+    
     try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || "your_jwt_secret");
+        
         const response = await axios.get(
-            `https://api.fitbit.com/1/user/${req.session.userId}/activities/steps/date/today/today.json`, 
+            `https://api.fitbit.com/1/user/${decoded.userId}/activities/steps/date/today/today.json`, 
             {
-                headers: { Authorization: `Bearer ${req.session.accessToken}` }
+                headers: { Authorization: `Bearer ${decoded.accessToken}` }
             }
         );
+        
         res.json(response.data);
     } catch (error) {
-        console.error("Fitbit API error:", error.response?.data || error.message);
-        res.status(500).json({
-            error: "Error fetching steps data",
-            fitbitError: error.response?.data
-        });
+        console.error("Error:", error);
+        res.status(401).json({ error: "Invalid token" });
     }
 });
 
