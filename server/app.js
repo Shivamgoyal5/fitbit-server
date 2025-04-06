@@ -533,33 +533,38 @@ app.get("/callback", async (req, res) => {
     try {
         const tokenResponse = await axios.post("https://api.fitbit.com/oauth2/token",
             new URLSearchParams({
-                client_id: CLIENT_ID,  // ✅ Fix: Add this
+                client_id: CLIENT_ID,
                 grant_type: "authorization_code",
                 redirect_uri: REDIRECT_URI,
                 code: code
             }), {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
-                    "Authorization": "Basic " + Buffer.from(${CLIENT_ID}:${CLIENT_SECRET}).toString("base64")
+                    "Authorization": "Basic " + Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64")
                 }
             });
 
+        // Store tokens in session
         req.session.accessToken = tokenResponse.data.access_token;
+        req.session.refreshToken = tokenResponse.data.refresh_token;
         req.session.userId = tokenResponse.data.user_id;
         
-        res.json({ user_id: tokenResponse.data.user_id });
-
-            
-        const accessToken = req.session.accessToken;
-        console.log(req.session.accessToken );
-        if (!accessToken) return res.status(401).send("Not authenticated");
-
+        // Redirect or send response
+        res.json({ 
+            success: true,
+            user_id: tokenResponse.data.user_id,
+            access_token: tokenResponse.data.access_token
+        });
             
     } catch (error) {
         console.error("Error exchanging code for token:", error.response?.data || error.message);
-        res.status(500).send("Authentication failed");
+        res.status(500).json({ 
+            error: "Authentication failed",
+            details: error.response?.data || error.message
+        });
     }
 });
+
 
 app.get("/", (req, res) => {
     res.send("Backend is running!");
