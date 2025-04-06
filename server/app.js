@@ -577,12 +577,6 @@ app.get("/", (req, res) => {
     res.send("Backend is running!");
 });
 
-app.use((req, res, next) => {
-    console.log('Session middleware:', req.sessionID, req.session);
-    next();
-});
-
-
 // Step 2: Fetch Fitbit User Profile
 // Step: Fetch Fitbit Step Data
 app.get("/profile", async (req, res) => {
