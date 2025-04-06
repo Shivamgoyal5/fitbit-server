@@ -492,13 +492,13 @@ app.use(cors({
     allowedHeaders: "Content-Type,Authorization"
 }));
 
-Handle preflight requests
-app.options("*", (req, res) => {
-    res.header("Access-Control-Allow-Origin", "https://fitbit-app-frontend.vercel.app");
-    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.sendStatus(200);
-});
+// Handle preflight requests
+// app.options("*", (req, res) => {
+//     res.header("Access-Control-Allow-Origin", "https://fitbit-app-frontend.vercel.app");
+//     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+//     res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//     res.sendStatus(200);
+// });
 
 
 
@@ -580,9 +580,9 @@ app.get("/profile", async (req, res) => {
     if (!accessToken) return res.status(401).send("Not authenticated");
 
     try {
-        const response = await axios.get(https://api.fitbit.com/1/user/${userId}/activities/steps/date/today/today.json, {
+        const response = await axios.get(`https://api.fitbit.com/1/user/${userId}/activities/steps/date/today/today.json`, {
             headers: {
-                Authorization: Bearer ${accessToken}
+                Authorization: `Bearer ${accessToken}`
             }
         });
 
