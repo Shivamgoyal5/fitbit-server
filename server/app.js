@@ -489,7 +489,8 @@ app.use(cors({
     origin: "https://fitbit-app-frontend.vercel.app",
     credentials: true,
     methods: "GET,POST,OPTIONS",
-    allowedHeaders: "Content-Type,Authorization"
+    allowedHeaders: "Content-Type,Authorization",
+    exposedHeaders: ["set-cookie"]
 }));
 
 // Handle preflight requests
@@ -514,10 +515,16 @@ app.options("*", (req, res) => {
 
 // Configure Sessions
 app.use(session({
-    secret: "supersecretkey",
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: true,sameSite:"None" }  // Change to true if using HTTPS
+    secret: process.env.SESSION_SECRET || "supersecretkey",
+    resave: true, // Changed to true for Vercel
+    saveUninitialized: true, // Changed to true
+    cookie: {
+        secure: true,
+        sameSite: 'None',
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000, // 24 hours
+        domain: process.env.NODE_ENV === 'production' ? '.vercel.app' : 'localhost'
+    }
 }));
 
 const CLIENT_ID = "23QCJS";
@@ -570,26 +577,38 @@ app.get("/", (req, res) => {
     res.send("Backend is running!");
 });
 
+app.use((req, res, next) => {
+    console.log('Session middleware:', req.sessionID, req.session);
+    next();
+});
+
 
 // Step 2: Fetch Fitbit User Profile
 // Step: Fetch Fitbit Step Data
 app.get("/profile", async (req, res) => {
-    const accessToken = req.session.accessToken;
-    const userId = req.session.userId || "CJJ9T6"; // or use '-' for current user
-
-    if (!accessToken) return res.status(401).send("Not authenticated");
+    console.log('Profile endpoint session:', req.session);
+    
+    if (!req.session.accessToken) {
+        return res.status(401).json({ 
+            error: "Not authenticated",
+            sessionData: req.session // For debugging
+        });
+    }
 
     try {
-        const response = await axios.get(`https://api.fitbit.com/1/user/${userId}/activities/steps/date/today/today.json`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
+        const response = await axios.get(
+            `https://api.fitbit.com/1/user/${req.session.userId}/activities/steps/date/today/today.json`, 
+            {
+                headers: { Authorization: `Bearer ${req.session.accessToken}` }
             }
-        });
-
+        );
         res.json(response.data);
     } catch (error) {
-        console.error("Error fetching steps data:", error.response?.data || error.message);
-        res.status(500).send("Error fetching steps data");
+        console.error("Fitbit API error:", error.response?.data || error.message);
+        res.status(500).json({
+            error: "Error fetching steps data",
+            fitbitError: error.response?.data
+        });
     }
 });
 
