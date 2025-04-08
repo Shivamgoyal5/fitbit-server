@@ -737,8 +737,13 @@ app.get("/", async (req, res) => {
 
 // Step 2: Fetch Fitbit User Profile
 app.get("/profile", async (req, res) => {
-    const accessToken = req.session.accessToken;
-    if (!accessToken) return res.status(401).send("Not authenticated");
+    // Look for token in Authorization header
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        return res.status(401).send("Not authenticated");
+    }
+
+    const accessToken = authHeader.split(" ")[1]; // Get token from "Bearer <token>"
 
     try {
         const userProfile = await axios.get("https://api.fitbit.com/1/user/-/profile.json", {
