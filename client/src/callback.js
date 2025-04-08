@@ -50,7 +50,9 @@ function Callback() {
         })
         .then((response) => {
           localStorage.setItem("user_id", response.data.user_id);
+            localStorage.setItem("access_token", response.data.access_token);
           setStatus("Login successful! Redirecting to profile...");
+            
           setTimeout(() => {
             navigate("/profile");
           }, 1000);
