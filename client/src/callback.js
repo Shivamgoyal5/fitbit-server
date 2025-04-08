@@ -49,6 +49,8 @@ function Callback() {
           withCredentials: true, // ✅ Required to include session cookie
         })
         .then((response) => {
+            console.log("user_id",  response.data.user_id);
+            console.log("access_token", response.data.access_token);
           localStorage.setItem("user_id", response.data.user_id);
             localStorage.setItem("access_token", response.data.access_token);
           setStatus("Login successful! Redirecting to profile...");
