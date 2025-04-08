@@ -5,11 +5,19 @@ function Profile() {
     const [stepsData, setStepsData] = useState(null);
 
     useEffect(() => {
-        axios.get("https://fitbit-app-backend.vercel.app/profile", {
-            withCredentiala: true })
-            .then(response => setStepsData(response.data))
-            .catch(error => console.error("Error fetching profile:", error));
-    }, []);
+    const token = localStorage.getItem("access_token"); // or the key you're using
+    if (!token) return console.error("Access token not found in localStorage");
+
+    axios.get("https://fitbit-app-backend.vercel.app/profile", {
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        withCredentials: true
+    })
+    .then(response => setStepsData(response.data))
+    .catch(error => console.error("Error fetching profile:", error));
+}, []);
+
 
     return (
         <div style={{ textAlign: "center", marginTop: "50px" }}>
