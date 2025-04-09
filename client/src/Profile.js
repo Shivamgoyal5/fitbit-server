@@ -30,7 +30,10 @@ function Profile() {
                     <p>Weight: {data.profile.user.weight} kg</p>
                     <p>Gender: {data.profile.user.gender}</p>
                     <h2>Steps Today: {data.steps["activities-steps"]?.[0]?.value || "N/A"}</h2>
-                    <h2>Calories Burned Today: {data.caloriesOut.calories || "N/A"} kcal</h2>
+                    <h2>Calories Burned Today: {data.calories.caloriesOut || "N/A"} kcal</h2>
+                    <h2>Distance Walked: {
+                        data.calories?.distances?.find(d => d.activity === "total")?.distance ?? "N/A"
+                    } km</h2>
                 
                 </div>
             ) : (
