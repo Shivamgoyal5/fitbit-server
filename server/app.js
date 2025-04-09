@@ -739,6 +739,7 @@ app.get("/", async (req, res) => {
 app.get("/profile", async (req, res) => {
     // Look for token in Authorization header
     const authHeader = req.headers.authorization;
+    const userId = req.session.userId;
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
         return res.status(401).send("Not authenticated");
     }
