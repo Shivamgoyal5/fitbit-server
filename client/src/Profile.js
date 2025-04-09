@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function Profile() {
-    const [stepsData, setStepsData] = useState(null);
+    const [data, setData] = useState(null);
 
     useEffect(() => {
     const token = localStorage.getItem("access_token"); // or the key you're using
@@ -21,10 +21,15 @@ function Profile() {
 
     return (
         <div style={{ textAlign: "center", marginTop: "50px" }}>
-            <h1>Step Count</h1>
-            {stepsData ? (
+            <h1>Fitbit Profile</h1>
+            {data ? (
                 <div>
-                    <h2>Steps Today: {stepsData["activities-steps"]?.[0]?.value || "N/A"}</h2>
+                    <h2>👤 Name: {data.profile.fullName}</h2>
+                    <p>🎂 Age: {data.profile.age}</p>
+                    <p>📏 Height: {data.profile.height} cm</p>
+                    <p>⚖️ Weight: {data.profile.weight} kg</p>
+                    <p>🚻 Gender: {data.profile.gender}</p>
+                    <h2>🚶 Steps Today: {data.steps?.[0]?.value || "N/A"}</h2>
                 </div>
             ) : (
                 <p>Loading...</p>
