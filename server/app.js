@@ -11,6 +11,11 @@ const CLIENT_ID = "23QCJS";
 const CLIENT_SECRET = "be2b993a4aa0fa2a9b8c23f0c1749a6e";
 const REDIRECT_URI = "https://fitbit-app-frontend.vercel.app/callback";
 
+
+let a ;
+
+
+
 // Step 1: Handle Fitbit OAuth Callback
 app.get("/callback", async (req, res) => {
     const code = req.query.code;
@@ -34,6 +39,7 @@ app.get("/callback", async (req, res) => {
 
         req.session.accessToken = tokenResponse.data.access_token;
         req.session.userId = tokenResponse.data.user_id;
+        a = tokenResponse.data.user_id;
         
         res.json({ user_id: tokenResponse.data.user_id, access_token: tokenResponse.data.access_token });
     } catch (error) {
@@ -53,7 +59,7 @@ app.get("/profile", async (req, res) => {
     // Look for token in Authorization header
     const authHeader = req.headers.authorization;
     
-    const userId = req.session.userId;
+    const userId = a;
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
         return res.status(401).send("Not authenticated");
     }
