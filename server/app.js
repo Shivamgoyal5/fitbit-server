@@ -83,7 +83,7 @@ app.get("/profile", async (req, res) => {
         res.json({
             profile: profileRes.data,
             steps: stepsRes.data,
-            calories: caloriesRes.data.summary.caloriesOut            
+            calories: caloriesRes.data.summary            
         });
     } catch (error) {
         console.error("Error fetching user profile:", error.response?.data || error.message);
