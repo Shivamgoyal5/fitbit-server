@@ -29,7 +29,7 @@ function Profile() {
                     <p>Height: {data.profile.user.height} cm</p>
                     <p>Weight: {data.profile.user.weight} kg</p>
                     <p>Gender: {data.profile.user.gender}</p>
-                    <h2>Steps Today: {data.steps?.[0]?.value || "N/A"}</h2>
+                    <h2>Steps Today: {data.steps["activities-steps"]?.[0]?.value || "N/A"}</h2>
                 </div>
             ) : (
                 <p>Loading...</p>
