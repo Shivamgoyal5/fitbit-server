@@ -67,11 +67,20 @@ app.get("/profile", async (req, res) => {
     const accessToken = authHeader.split(" ")[1]; // Get token from "Bearer <token>"
 
     try {
-        const userProfile = await axios.get(`https://api.fitbit.com/1/user/${userId}/activities/steps/date/today/today.json`, {
-            headers: { "Authorization": `Bearer ${accessToken}` }
-        });
+        const headers = {
+            "Authorization": `Bearer ${accessToken}`
+        };
 
-        res.json(userProfile.data);
+        // Make parallel requests for profile and steps
+        const [profileRes, stepsRes] = await Promise.all([
+            axios.get("https://api.fitbit.com/1/user/${userId}/profile.json", { headers }),
+            axios.get("https://api.fitbit.com/1/user/${userId}/activities/steps/date/today/today.json", { headers })
+        ]);
+
+        res.json({
+            profile: profileRes.data,
+            steps: stepsRes.data
+        });
     } catch (error) {
         console.error("Error fetching user profile:", error.response?.data || error.message);
         res.status(500).send("Error fetching user profile");
