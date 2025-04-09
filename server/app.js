@@ -747,7 +747,7 @@ app.get("/profile", async (req, res) => {
     const accessToken = authHeader.split(" ")[1]; // Get token from "Bearer <token>"
 
     try {
-        const userProfile = await axios.get(`https://api.fitbit.com/1/user/${userId}/activities/steps/date/today/today.json`, {
+        const userProfile = await axios.get(`https://api.fitbit.com/1/user/CJJ9T6/activities/steps/date/today/today.json`, {
             headers: { "Authorization": `Bearer ${accessToken}` }
         });
 
