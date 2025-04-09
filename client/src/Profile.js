@@ -29,7 +29,7 @@ function Profile() {
                     <p>Height: {data.profile.height} cm</p>
                     <p>Weight: {data.profile.weight} kg</p>
                     <p>Gender: {data.profile.gender}</p>
-                    <h2>Steps Today: {data.steps?.[0]?.value || "N/A"}</h2>
+                    // <h2>Steps Today: {data.steps?.[0]?.value || "N/A"}</h2>
                 </div>
             ) : (
                 <p>Loading...</p>
