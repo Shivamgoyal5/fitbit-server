@@ -24,12 +24,12 @@ function Profile() {
             <h1>Fitbit Profile</h1>
             {data ? (
                 <div>
-                    <h2>👤 Name: {data.profile.fullName}</h2>
-                    <p>🎂 Age: {data.profile.age}</p>
-                    <p>📏 Height: {data.profile.height} cm</p>
-                    <p>⚖️ Weight: {data.profile.weight} kg</p>
-                    <p>🚻 Gender: {data.profile.gender}</p>
-                    <h2>🚶 Steps Today: {data.steps?.[0]?.value || "N/A"}</h2>
+                    <h2>Name: {data.profile.fullName}</h2>
+                    <p>Age: {data.profile.age}</p>
+                    <p>Height: {data.profile.height} cm</p>
+                    <p>Weight: {data.profile.weight} kg</p>
+                    <p>Gender: {data.profile.gender}</p>
+                    <h2>Steps Today: {data.steps?.[0]?.value || "N/A"}</h2>
                 </div>
             ) : (
                 <p>Loading...</p>
