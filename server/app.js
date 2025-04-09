@@ -72,14 +72,14 @@ app.get("/profile", async (req, res) => {
         };
 
         // Make parallel requests for profile and steps
-        const [profileRes] = await Promise.all([
-            axios.get(`https://api.fitbit.com/1/user/${userId}/profile.json`, { headers })
-            // axios.get("https://api.fitbit.com/1/user/${userId}/activities/steps/date/today/today.json", { headers })
+        const [profileRes , stepsRes] = await Promise.all([
+            axios.get(`https://api.fitbit.com/1/user/${userId}/profile.json`, { headers }),
+            axios.get(`https://api.fitbit.com/1/user/${userId}/activities/steps/date/today/today.json`, { headers })
         ]);
 
         res.json({
-            profile: profileRes.data
-            // steps: stepsRes.data
+            profile: profileRes.data,
+            steps: stepsRes.data
         });
     } catch (error) {
         console.error("Error fetching user profile:", error.response?.data || error.message);
