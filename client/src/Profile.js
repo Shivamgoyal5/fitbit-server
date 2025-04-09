@@ -14,7 +14,7 @@ function Profile() {
         },
         withCredentials: true
     })
-    .then(response => setStepsData(response.data))
+    .then(response => setData(response.data))
     .catch(error => console.error("Error fetching profile:", error));
 }, []);
 
