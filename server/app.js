@@ -14,8 +14,6 @@ const REDIRECT_URI = "https://fitbit-app-frontend.vercel.app/callback";
 
 let a ;
 
-
-
 // Step 1: Handle Fitbit OAuth Callback
 app.get("/callback", async (req, res) => {
     const code = req.query.code;
