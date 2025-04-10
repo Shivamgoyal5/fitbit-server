@@ -34,6 +34,12 @@ function Profile() {
                     <h2>Distance Walked: {
                         data.calories?.distances?.find(d => d.activity === "total")?.distance ?? "N/A"
                     } km</h2>
+                    <h2>Running distance: {
+                        data.calories?.distances?.find(d => d.activity === "veryActive")?.distance ?? "N/A"
+                    } km</h2>
+                <h2>Cycling: {
+                        data.calories?.distances?.find(d => d.activity === "moderatelyActive")?.distance ?? "N/A"
+                    } km</h2>
                 
                 </div>
             ) : (
