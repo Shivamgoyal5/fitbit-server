@@ -3,6 +3,10 @@ const axios = require("axios");
 const session = require("express-session");
 const cors = require("cors");
 
+
+const dbConnect = require("./config/database");
+dbConnect();
+
 const app = express();
 app.use(cors({ origin: ["*"], credentials: true }));
 app.use(session({ secret: "secret", resave: false, saveUninitialized: true }));
