@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const session = require("express-session");
 const cors = require("cors");
+const User = require("/models/User");
 
 
 const dbConnect = require("./config/database");
