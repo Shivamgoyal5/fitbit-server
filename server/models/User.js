@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema(
+const userInfo = new mongoose.Schema(
     {
         name:{
             type:String,
@@ -12,22 +12,6 @@ const userSchema = new mongoose.Schema(
             required:true,
             maxLength:50,
         },
-        password:{
-            type:String,
-            required:true,
-        },
-        role: {
-          type: String,
-          required: true,
-          enum: ['Admin', 'User'],
-          default: 'Admin',
-      },
-
-      walletAddress:{
-        type: String,
-          required: true,
-      },
-      
         height: {
             type: Number, 
             min: 30, 
@@ -47,22 +31,35 @@ const userSchema = new mongoose.Schema(
             type: String,
             enum: ["Male", "Female", "Other"], 
           },
-          medicalConditions: {
-            type: String,
-            enum: ["a", "b", "c"], 
-          },
           walletAddress: {
             type: String,
             maxLength: 100, 
           },
-          applied: { type: Boolean, default: false },  
-          verified: { type: Boolean, default: false },
           group: {
             type: String,
             enum: ["a", "b", "c",'d','e','f','g'], 
           },
-
+          steps: {
+            type: Number, 
+            min: 0,  
+          },
+          calories: {
+            type: Number, 
+            min: 0,  
+          },
+          walking: {
+            type: Number, 
+            min: 0,  
+          },
+          running: {
+            type: Number, 
+            min: 0,  
+          },
+          cycling: {
+            type: Number, 
+            min: 0,  
+          },
     }
 );
 
-module.exports = mongoose.model("userSchema", userSchema);
+module.exports = mongoose.model("userInfo", userInfo);
