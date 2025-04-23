@@ -2,19 +2,19 @@ const express = require("express");
 const axios = require("axios");
 const session = require("express-session");
 const cors = require("cors");
-const User = require("/models/User");
+// const User = require("/models/User");
 
-const Group1 = require("/models/Group1");
-const Group2 = require("/models/Group2");
-const  Group3= require("/models/Group3");
-const Group4 = require("/models/Group4");
-const Group5 = require("/models/Group5");
-const Group6 = require("/models/Group6");
-const Group7 = require("/models/Group7");
+// const Group1 = require("/models/Group1");
+// const Group2 = require("/models/Group2");
+// const  Group3= require("/models/Group3");
+// const Group4 = require("/models/Group4");
+// const Group5 = require("/models/Group5");
+// const Group6 = require("/models/Group6");
+// const Group7 = require("/models/Group7");
 
 
-const dbConnect = require("./config/database");
-dbConnect();
+// const dbConnect = require("./config/database");
+// dbConnect();
 
 const app = express();
 app.use(cors({ origin: ["*"], credentials: true }));
@@ -105,16 +105,16 @@ const walking = caloriesRes.data.summary.distances.find(
 const totalDistance = totalDistanceObj ? totalDistanceObj.distance : 0;
 
 
- const user = await User.create({
-      name,
-      age,
-      height,
-      weight,
-      gender,
-      steps,
-      calories,
-      walking,
-    });
+ // const user = await User.create({
+ //      name,
+ //      age,
+ //      height,
+ //      weight,
+ //      gender,
+ //      steps,
+ //      calories,
+ //      walking,
+ //    });
         
 
 
