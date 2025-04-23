@@ -41,7 +41,7 @@ const userInfo = new mongoose.Schema(
           },
           step: {
             type: String, 
-            min: 0,  
+            // min: 0,  
           },
           calories: {
             type: Number, 
