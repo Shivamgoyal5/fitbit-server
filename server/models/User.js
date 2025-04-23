@@ -39,7 +39,7 @@ const userInfo = new mongoose.Schema(
             type: String,
             enum: ["a", "b", "c",'d','e','f','g'], 
           },
-          step: {
+          steps: {
             type: Number, 
             min: 0,  
           },
