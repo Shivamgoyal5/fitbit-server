@@ -2,7 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const session = require("express-session");
 const cors = require("cors");
-// const User = require("/models/User");
+const User = require("/models/User");
 
 // const Group1 = require("/models/Group1");
 // const Group2 = require("/models/Group2");
@@ -13,8 +13,8 @@ const cors = require("cors");
 // const Group7 = require("/models/Group7");
 
 
-// const dbConnect = require("./config/database");
-// dbConnect();
+const dbConnect = require("./config/database");
+dbConnect();
 
 const app = express();
 app.use(cors({ origin: ["*"], credentials: true }));
@@ -91,12 +91,12 @@ app.get("/profile", async (req, res) => {
             axios.get(`https://api.fitbit.com/1/user/${userId}/activities/date/${today}.json`, { headers })
         ]);
 
-        // const name = profileRes.data.user.fullName;
-        // const age = profileRes.data.user.age;
-        // const height = profileRes.data.user.height;
-        // const weight = profileRes.data.user.weight;
-        // const gender = profileRes.data.user.gender;
-        // const steps = stepsRes.data["activities-steps"][0].value;
+        const name = profileRes.data.user.fullName;
+        const age = profileRes.data.user.age;
+        const height = profileRes.data.user.height;
+        const weight = profileRes.data.user.weight;
+        const gender = profileRes.data.user.gender;
+        const steps = stepsRes.data["activities-steps"][0].value;
         // const calories = caloriesRes.data.summary.caloriesOut;
 
         // const walking = caloriesRes.data.summary.distances.find(
@@ -105,16 +105,16 @@ app.get("/profile", async (req, res) => {
         // const totalDistance = totalDistanceObj ? totalDistanceObj.distance : 0;
 
 
- // const user = await User.create({
- //      name,
- //      age,
- //      height,
- //      weight,
- //      gender,
- //      steps,
- //      calories,
- //      walking,
- //    });
+ const user = await User.create({
+      name,
+      age,
+      height,
+      weight,
+      gender,
+      steps,
+      // calories,
+      // walking,
+    });
         
 
 
