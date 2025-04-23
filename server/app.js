@@ -111,7 +111,7 @@ app.get("/profile", async (req, res) => {
  //      // height,
  //      // weight,
  //      // gender,
-         steps,
+         step,
  //      // calories,
  //      // walking,
     });
