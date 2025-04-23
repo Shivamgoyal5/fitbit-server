@@ -92,6 +92,7 @@ app.get("/profile", async (req, res) => {
         ]);
         // const steps = await stepsRes.json();
         // const step = steps['activities-steps'][0].value;
+        // const name = 
         // const age = profileRes.data.user.age;
         // const height = profileRes.data.user.height;
         // const weight = profileRes.data.user.weight;
@@ -105,16 +106,16 @@ app.get("/profile", async (req, res) => {
         // const totalDistance = totalDistanceObj ? totalDistanceObj.distance : 0;
 
 
- const user = await User.create({
- //      name,
- //      // age,
- //      // height,
- //      // weight,
- //      // gender,
-         step,
- //      // calories,
- //      // walking,
-    });
+ // const user = await User.create({
+ // //      name,
+ // //      // age,
+ // //      // height,
+ // //      // weight,
+ // //      // gender,
+ //         step,
+ // //      // calories,
+ // //      // walking,
+ //    });
         
 
 
