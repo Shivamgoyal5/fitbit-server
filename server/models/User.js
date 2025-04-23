@@ -40,7 +40,7 @@ const userInfo = new mongoose.Schema(
             enum: ["a", "b", "c",'d','e','f','g'], 
           },
           steps: {
-            type: Number, 
+            type: String, 
             min: 0,  
           },
           calories: {
