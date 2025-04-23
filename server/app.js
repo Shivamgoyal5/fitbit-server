@@ -91,7 +91,7 @@ app.get("/profile", async (req, res) => {
             axios.get(`https://api.fitbit.com/1/user/${userId}/activities/date/${today}.json`, { headers })
         ]);
 
-        const name = profileRes.data.user.fullName;
+        const name = profileRes.data.data.user.fullName;
         // const age = profileRes.data.user.age;
         // const height = profileRes.data.user.height;
         // const weight = profileRes.data.user.weight;
