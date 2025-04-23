@@ -90,13 +90,13 @@ app.get("/profile", async (req, res) => {
             axios.get(`https://api.fitbit.com/1/user/${userId}/activities/steps/date/today/today.json`, { headers }),
             axios.get(`https://api.fitbit.com/1/user/${userId}/activities/date/${today}.json`, { headers })
         ]);
-        const steps = await stepsRes.json();
-        const step = steps['activities-steps'][0].value;
+        // const steps = await stepsRes.json();
+        // const step = steps['activities-steps'][0].value;
         // const age = profileRes.data.user.age;
         // const height = profileRes.data.user.height;
         // const weight = profileRes.data.user.weight;
         // const gender = profileRes.data.user.gender;
-        // const steps = stepsRes.data["activities-steps"][0].value;
+        const steps = stepsRes.data["activities-steps"][0].value||0;
         // const calories = caloriesRes.data.summary.caloriesOut;
 
         // const walking = caloriesRes.data.summary.distances.find(
