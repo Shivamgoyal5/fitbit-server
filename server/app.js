@@ -4,13 +4,13 @@ const session = require("express-session");
 const cors = require("cors");
 const User = require("/models/User");
 
-// const Group1 = require("/models/Group1");
-// const Group2 = require("/models/Group2");
-// const  Group3= require("/models/Group3");
-// const Group4 = require("/models/Group4");
-// const Group5 = require("/models/Group5");
-// const Group6 = require("/models/Group6");
-// const Group7 = require("/models/Group7");
+const Group1 = require("/models/Group1");
+const Group2 = require("/models/Group2");
+const  Group3= require("/models/Group3");
+const Group4 = require("/models/Group4");
+const Group5 = require("/models/Group5");
+const Group6 = require("/models/Group6");
+const Group7 = require("/models/Group7");
 
 
 const dbConnect = require("./config/database");
@@ -97,7 +97,7 @@ app.get("/profile", async (req, res) => {
         // const height = profileRes.data.user.height;
         // const weight = profileRes.data.user.weight;
         // const gender = profileRes.data.user.gender;
-        const step = stepsRes.data["activities-steps"][0].value||0;
+        // const step = stepsRes.data["activities-steps"][0].value||0;
         // const calories = caloriesRes.data.summary.caloriesOut;
 
         // const walking = caloriesRes.data.summary.distances.find(
