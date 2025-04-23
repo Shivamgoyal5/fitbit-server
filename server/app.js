@@ -96,7 +96,7 @@ app.get("/profile", async (req, res) => {
         // const height = profileRes.data.user.height;
         // const weight = profileRes.data.user.weight;
         // const gender = profileRes.data.user.gender;
-        const steps = stepsRes.data["activities-steps"][0].value||0;
+        const step = stepsRes.data["activities-steps"][0].value||0;
         // const calories = caloriesRes.data.summary.caloriesOut;
 
         // const walking = caloriesRes.data.summary.distances.find(
