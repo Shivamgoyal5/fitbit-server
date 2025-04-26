@@ -92,7 +92,9 @@ app.get("/profile", async (req, res) => {
         ]);
         console.log(profileRes.data);
         const name=profileRes.data.user.fullName;
-        const walking = caloriesRes.data.summary.calories?.distances?.find(d => d.activity === "total")
+       const walkingObj = caloriesRes.data.summary.distances?.find(d => d.activity === "total");
+const walking = walkingObj ? walkingObj.distance : 0;
+
         // const steps = await stepsRes.json();
         // const step = steps['activities-steps'][0].value;
         // const name = 
