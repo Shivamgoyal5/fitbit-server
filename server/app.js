@@ -109,16 +109,16 @@ app.get("/profile", async (req, res) => {
         // const totalDistance = totalDistanceObj ? totalDistanceObj.distance : 0;
 
 
- // const user = await User.create({
- // //      name,
- // //      // age,
- // //      // height,
- // //      // weight,
- // //      // gender,
- //         step,
- // //      // calories,
- // //      // walking,
- //    });
+ const user = await User.create({
+      name,
+      age,
+      height,
+      weight,
+      gender,
+         // step,
+ //      // calories,
+ //      // walking,
+    });
         
 
 
