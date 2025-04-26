@@ -26,7 +26,7 @@ const userInfo = new mongoose.Schema(
         //     type: Number, 
         //     min: 0, 
         //     max: 150, 
-          },
+          // },
           // gender: {
           //   type: String,
           //   enum: ["Male", "Female", "Other"], 
