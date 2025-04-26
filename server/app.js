@@ -90,7 +90,7 @@ app.get("/profile", async (req, res) => {
             axios.get(`https://api.fitbit.com/1/user/${userId}/activities/steps/date/today/today.json`, { headers }),
             axios.get(`https://api.fitbit.com/1/user/${userId}/activities/date/${today}.json`, { headers })
         ]);
-        // console.log(profileRes.data.user.age);
+        console.log(profileRes.data.user.age);
 
         // const steps = await stepsRes.json();
         // const step = steps['activities-steps'][0].value;
