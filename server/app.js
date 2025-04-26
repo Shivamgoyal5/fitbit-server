@@ -97,8 +97,8 @@ app.get("/profile", async (req, res) => {
 
       const distances = caloriesRes.data.summary.distances || [];
         const walkingObj = distances.find(d => d.activity === "total");
-        const runningObj = distances.find(d => d.activity === "run");
-        const cyclingObj = distances.find(d => d.activity === "bike");
+        const runningObj = distances.find(d => d.activity === "veryActive");
+        const cyclingObj = distances.find(d => d.activity === "moderatelyActive");
 
         const walking = walkingObj ? walkingObj.distance : 0;
         const running = runningObj ? runningObj.distance : 0;
