@@ -28,8 +28,7 @@ const userInfo = new mongoose.Schema(
             max: 150, 
           },
           gender: {
-            type: String,
-            enum: ["Male", "Female", "Other"], 
+            type: String, 
           },
           // walletAddress: {
           //   type: String,
