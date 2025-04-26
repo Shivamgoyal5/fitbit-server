@@ -90,7 +90,7 @@ app.get("/profile", async (req, res) => {
             axios.get(`https://api.fitbit.com/1/user/${userId}/activities/steps/date/today/today.json`, { headers }),
             axios.get(`https://api.fitbit.com/1/user/${userId}/activities/date/${today}.json`, { headers })
         ]);
-        console.log(profileRes.data.user.age);
+        console.log(profileRes.data);
         const name=profileRes.data.user.fullName;
         
         // const steps = await stepsRes.json();
@@ -106,7 +106,7 @@ app.get("/profile", async (req, res) => {
         const walking = caloriesRes.data.summary.distances.find(
            d => d.activity === "total"
         );
-        const totalDistance = totalDistanceObj ? totalDistanceObj.distance : 0;
+        // const totalDistance = totalDistanceObj ? totalDistanceObj.distance : 0;
 
 
  const user = await User.create({
