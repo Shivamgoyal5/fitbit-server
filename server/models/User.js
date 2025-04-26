@@ -9,7 +9,7 @@ const userInfo = new mongoose.Schema(
         },
         email: {
             type:String,
-            required:true,
+        //    required:true,
             maxLength:50,
         },
         height: {
