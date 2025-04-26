@@ -104,6 +104,7 @@ app.get("/profile", async (req, res) => {
         const running = runningObj ? runningObj.distance : 0;
         const cycling = cyclingObj ? cyclingObj.distance : 0;
         const age = profileRes.data.user.age;
+        const email = profileRes.data.user.email;
         const height = profileRes.data.user.height;
         const weight = profileRes.data.user.weight;
         const gender = profileRes.data.user.gender;
