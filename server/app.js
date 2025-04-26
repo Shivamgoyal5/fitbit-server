@@ -103,9 +103,9 @@ app.get("/profile", async (req, res) => {
         const steps = stepsRes.data["activities-steps"][0].value||0;
         const calories = caloriesRes.data.summary.caloriesOut;
 
-        const walking = caloriesRes.data.summary.distances.find(
-           d => d.activity === "total"
-        );
+        // const walking = caloriesRes.data.summary.distances.find(
+          // d => d.activity === "total"
+        // );
         // const totalDistance = totalDistanceObj ? totalDistanceObj.distance : 0;
 
 
@@ -117,7 +117,7 @@ app.get("/profile", async (req, res) => {
       gender,
         steps,
       calories,
-      walking,
+      // walking,
     });
         
 
