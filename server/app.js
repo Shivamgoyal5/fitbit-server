@@ -100,13 +100,13 @@ app.get("/profile", async (req, res) => {
         const height = profileRes.data.user.height;
         const weight = profileRes.data.user.weight;
         const gender = profileRes.data.user.gender;
-        // const step = stepsRes.data["activities-steps"][0].value||0;
-        // const calories = caloriesRes.data.summary.caloriesOut;
+        const steps = stepsRes.data["activities-steps"][0].value||0;
+        const calories = caloriesRes.data.summary.caloriesOut;
 
-        // const walking = caloriesRes.data.summary.distances.find(
-        //    d => d.activity === "total"
-        // );
-        // const totalDistance = totalDistanceObj ? totalDistanceObj.distance : 0;
+        const walking = caloriesRes.data.summary.distances.find(
+           d => d.activity === "total"
+        );
+        const totalDistance = totalDistanceObj ? totalDistanceObj.distance : 0;
 
 
  const user = await User.create({
@@ -115,9 +115,9 @@ app.get("/profile", async (req, res) => {
       height,
       weight,
       gender,
-         // step,
- //      // calories,
- //      // walking,
+        steps,
+      calories,
+      walking,
     });
         
 
