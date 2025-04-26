@@ -92,12 +92,17 @@ app.get("/profile", async (req, res) => {
         ]);
         console.log(profileRes.data);
         const name=profileRes.data.user.fullName;
-       const walkingObj = caloriesRes.data.summary.distances?.find(d => d.activity === "total");
-const walking = walkingObj ? walkingObj.distance : 0;
+//        const walkingObj = caloriesRes.data.summary.distances?.find(d => d.activity === "total");
+// const walking = walkingObj ? walkingObj.distance : 0;
 
-        // const steps = await stepsRes.json();
-        // const step = steps['activities-steps'][0].value;
-        // const name = 
+      const distances = caloriesRes.data.summary.distances || [];
+        const walkingObj = distances.find(d => d.activity === "total");
+        const runningObj = distances.find(d => d.activity === "run");
+        const cyclingObj = distances.find(d => d.activity === "bike");
+
+        const walking = walkingObj ? walkingObj.distance : 0;
+        const running = runningObj ? runningObj.distance : 0;
+        const cycling = cyclingObj ? cyclingObj.distance : 0;
         const age = profileRes.data.user.age;
         const height = profileRes.data.user.height;
         const weight = profileRes.data.user.weight;
@@ -120,6 +125,8 @@ const walking = walkingObj ? walkingObj.distance : 0;
         steps,
       calories,
       walking,
+     running,
+     cycling,
     });
         
 
