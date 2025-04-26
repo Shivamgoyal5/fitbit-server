@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 // require("dotenv").config();
 
 const dbConnect = () => {
-    mongoose.connect("mongodb+srv://Siya:RHd2bDMGiEF1yGZT@cluster0.cit4ghk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
+    mongoose.connect("mongodb+srv://Siya:RHd2bDMGiEF1yGZT@cluster0.a9w3hux.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
         useNewUrlParser:true,
         useUnifiedTopology: true,
     })
