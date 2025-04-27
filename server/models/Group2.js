@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const Group1 = new mongoose.Schema(
+const Group2 = new mongoose.Schema(
     {
         name: [{
             type: String,
@@ -16,4 +16,4 @@ const Group1 = new mongoose.Schema(
     }
 );
 
-module.exports = mongoose.model("Group1", Group1);
+module.exports = mongoose.model("Group2", Group2);
