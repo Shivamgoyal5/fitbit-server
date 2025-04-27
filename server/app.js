@@ -166,7 +166,7 @@ if (group === 'a') {
 
     if (!group2) {
         // If no Group1 document exists, create a new one
-        group2 = new Group1({
+        group2 = new Group2({
             name: [name], // Initialize with the first name
                // Set admin if needed
         });
