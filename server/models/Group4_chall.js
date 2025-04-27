@@ -2,6 +2,17 @@ const mongoose = require("mongoose");
 
 const Group4_chall = new mongoose.Schema(
     {
+         name: [{
+            type: String,
+            maxLength: 50,
+        }],
+        email: {
+            type:String,
+            maxLength:50,
+        },
+        admin:{
+            type:String,
+        },   
         Challenge:{
             type:String,
         } ,  
@@ -10,7 +21,7 @@ const Group4_chall = new mongoose.Schema(
         }, 
         Tips:{
             type:String,
-        },       
+        },  
     }
 );
 
