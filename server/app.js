@@ -111,10 +111,40 @@ app.get("/profile", async (req, res) => {
         const steps = stepsRes.data["activities-steps"][0].value||0;
         const calories = caloriesRes.data.summary.caloriesOut;
 
-        // const walking = caloriesRes.data.summary.distances.find(
-          // d => d.activity === "total"
-        // );
-        // const totalDistance = totalDistanceObj ? totalDistanceObj.distance : 0;
+       const BMI=(weight)/(height**2);
+
+    if (gender === 'MALE') {
+      if (age<=50){
+        if (BMI<18.5){
+          User.group = 'd';    
+          
+        }
+        else if(BMI>=18.5 && BMI<=24.9){    
+          User.group = 'g';
+        }
+        else{
+          User.group = 'e';
+        }
+      }
+      else{
+        User.group = 'f';
+      }
+    } else {
+      if (age<=50){
+        if (BMI<18.5){
+          User.group = 'a';
+        }
+        else if(BMI>=18.5 && BMI<=24.9){
+          User.group = 'g';
+        }
+        else{
+          User.group = 'b';
+        }
+      }
+      else{
+        User.group = 'c';   
+      }
+    }
 
 
  const user = await User.create({
