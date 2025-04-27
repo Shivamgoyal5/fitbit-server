@@ -2,16 +2,16 @@ const mongoose = require("mongoose");
 
 const Group1 = new mongoose.Schema(
     {
-        name:{
-            type:String,
-            maxLength:50,
-        },
+        name: [{
+            type: String,
+            maxLength: 50,
+        }],
         email: {
-            type:String,
-            maxLength:50,
+            type: String,
+            maxLength: 50,
         },
-        admin:{
-            type:String,
+        admin: {
+            type: String,
         },        
     }
 );
