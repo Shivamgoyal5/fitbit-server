@@ -141,9 +141,128 @@ if (gender === 'MALE') {
   }
 }
 
-if (group=='a'){
-    
+if (group === 'a') {
+    // Find the existing Group1 document or create one if it doesn't exist
+    let group1 = await Group1.findOne();
+
+    if (!group1) {
+        // If no Group1 document exists, create a new one
+        group1 = new Group1({
+            name: [name], // Initialize with the first name
+               // Set admin if needed
+        });
+    } else {
+        // If Group1 document exists, push the new name into the array
+        group1.name.push(name);
+    }
+
+    await group1.save();
 }
+
+        
+        if (group === 'b') {
+    // Find the existing Group1 document or create one if it doesn't exist
+    let group2 = await Group2.findOne();
+
+    if (!group2) {
+        // If no Group1 document exists, create a new one
+        group2 = new Group1({
+            name: [name], // Initialize with the first name
+               // Set admin if needed
+        });
+    } else {
+        // If Group1 document exists, push the new name into the array
+        group2.name.push(name);
+    }
+
+    await group2.save();
+}
+        if (group === 'c') {
+    // Find the existing Group1 document or create one if it doesn't exist
+    let group1 = await Group3.findOne();
+
+    if (!group3) {
+        // If no Group1 document exists, create a new one
+        group3 = new Group3({
+            name: [name], // Initialize with the first name
+               // Set admin if needed
+        });
+    } else {
+        // If Group1 document exists, push the new name into the array
+        group3.name.push(name);
+    }
+
+    await group3.save();
+}
+        if (group === 'd') {
+    // Find the existing Group1 document or create one if it doesn't exist
+    let group4 = await Group4.findOne();
+
+    if (!group4) {
+        // If no Group1 document exists, create a new one
+        group4 = new Group4({
+            name: [name], // Initialize with the first name
+               // Set admin if needed
+        });
+    } else {
+        // If Group1 document exists, push the new name into the array
+        group4.name.push(name);
+    }
+
+    await group4.save();
+}
+        if (group === 'e') {
+    // Find the existing Group1 document or create one if it doesn't exist
+    let group5 = await Group5.findOne();
+
+    if (!group5) {
+        // If no Group1 document exists, create a new one
+        group5 = new Group5({
+            name: [name], // Initialize with the first name
+               // Set admin if needed
+        });
+    } else {
+        // If Group1 document exists, push the new name into the array
+        group5.name.push(name);
+    }
+
+    await group5.save();
+}
+        if (group === 'f') {
+    // Find the existing Group1 document or create one if it doesn't exist
+    let group6 = await Group6.findOne();
+
+    if (!group6) {
+        // If no Group1 document exists, create a new one
+        group6 = new Group6({
+            name: [name], // Initialize with the first name
+               // Set admin if needed
+        });
+    } else {
+        // If Group1 document exists, push the new name into the array
+        group6.name.push(name);
+    }
+
+    await group6.save();
+}
+        if (group === 'g') {
+    // Find the existing Group1 document or create one if it doesn't exist
+    let group7 = await Group7.findOne();
+
+    if (!group7) {
+        // If no Group1 document exists, create a new one
+        group7 = new Group7({
+            name: [name], // Initialize with the first name
+               // Set admin if needed
+        });
+    } else {
+        // If Group1 document exists, push the new name into the array
+        group7.name.push(name);
+    }
+
+    await group7.save();
+}
+
 
         
 
