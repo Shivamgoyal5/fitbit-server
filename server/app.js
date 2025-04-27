@@ -113,38 +113,34 @@ app.get("/profile", async (req, res) => {
 
        const BMI=(weight)/(height**2);
 
-    if (gender === 'MALE') {
-      if (age<=50){
-        if (BMI<18.5){
-          User.group = 'd';    
-          
-        }
-        else if(BMI>=18.5 && BMI<=24.9){    
-          User.group = 'g';
-        }
-        else{
-          User.group = 'e';
-        }
-      }
-      else{
-        User.group = 'f';
-      }
+    let group;
+
+if (gender === 'MALE') {
+  if (age <= 50) {
+    if (BMI < 18.5) {
+      group = 'd';
+    } else if (BMI >= 18.5 && BMI <= 24.9) {
+      group = 'g';
     } else {
-      if (age<=50){
-        if (BMI<18.5){
-          User.group = 'a';
-        }
-        else if(BMI>=18.5 && BMI<=24.9){
-          User.group = 'g';
-        }
-        else{
-          User.group = 'b';
-        }
-      }
-      else{
-        User.group = 'c';   
-      }
+      group = 'e';
     }
+  } else {
+    group = 'f';
+  }
+} else {
+  if (age <= 50) {
+    if (BMI < 18.5) {
+      group = 'a';
+    } else if (BMI >= 18.5 && BMI <= 24.9) {
+      group = 'g';
+    } else {
+      group = 'b';
+    }
+  } else {
+    group = 'c';
+  }
+}
+
 
 
  const user = await User.create({
@@ -159,6 +155,7 @@ app.get("/profile", async (req, res) => {
       walking,
      running,
      cycling,
+     group,
     });
         
 
