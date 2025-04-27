@@ -1,19 +1,19 @@
 const mongoose = require("mongoose");
 
-const Group2 = new mongoose.Schema(
+const Group1 = new mongoose.Schema(
     {
-        name:{
-            type:String,
-            maxLength:50,
-        },
+        name: [{
+            type: String,
+            maxLength: 50,
+        }],
         email: {
-            type:String,
-            maxLength:50,
+            type: String,
+            maxLength: 50,
         },
-        admin:{
-            type:String,
+        admin: {
+            type: String,
         },        
     }
 );
 
-module.exports = mongoose.model("Group2", Group2);
+module.exports = mongoose.model("Group1", Group1);
