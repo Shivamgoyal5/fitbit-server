@@ -111,7 +111,7 @@ app.get("/profile", async (req, res) => {
         const steps = stepsRes.data["activities-steps"][0].value||0;
         const calories = caloriesRes.data.summary.caloriesOut;
 
-       const BMI=(weight)/(height**2);
+       const BMI=(weight)/((height/100)**2);
 
     let group;
 
@@ -140,6 +140,8 @@ if (gender === 'MALE') {
     group = 'c';
   }
 }
+
+        
 
 
 
