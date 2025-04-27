@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Group6 = new mongoose.Schema(
     {
-        name: [{
+         name: [{
             type: String,
             maxLength: 50,
         }],
@@ -12,7 +12,16 @@ const Group6 = new mongoose.Schema(
         },
         admin:{
             type:String,
-        },        
+        },   
+        Challenge:{
+            type:String,
+        } ,  
+        Quote:{
+            type:String,
+        }, 
+        Tips:{
+            type:String,
+        },  
     }
 );
 
