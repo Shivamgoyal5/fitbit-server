@@ -186,7 +186,7 @@ if (group === 'a') {
 }
         if (group === 'c') {
     // Find the existing Group1 document or create one if it doesn't exist
-    let group1 = await Group3.findOne();
+    let group3 = await Group3.findOne();
 
     if (!group3) {
         // If no Group1 document exists, create a new one
