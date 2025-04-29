@@ -11,6 +11,13 @@ const Group4 = require("./models/Group4");
 const Group5 = require("./models/Group5");
 const Group6 = require("./models/Group6");
 const Group7 = require("./models/Group7");
+const Group1_chall = require("./models/Group1_chall");
+const Group2_chall = require("./models/Group2_chall");
+const  Group3_chall= require("./models/Group3_chall");
+const Group4_chall = require("./models/Group4_chall");
+const Group5_chall = require("./models/Group5_chall");
+const Group6_chall = require("./models/Group6_chall");
+const Group7_chall = require("./models/Group7_chall");
 
 
 const dbConnect = require("./config/database");
@@ -265,13 +272,13 @@ if (group === 'a') {
 
 let groupModel;
 switch (group) {
-  case 'a': groupModel = Group1; break;
-  case 'b': groupModel = Group2; break;
-  case 'c': groupModel = Group3; break;
-  case 'd': groupModel = Group4; break;
-  case 'e': groupModel = Group5; break;
-  case 'f': groupModel = Group6; break;
-  case 'g': groupModel = Group7; break;
+  case 'a': groupModel = Group1_chall; break;
+  case 'b': groupModel = Group2_chall; break;
+  case 'c': groupModel = Group3_chall; break;
+  case 'd': groupModel = Group4_chall; break;
+  case 'e': groupModel = Group5_chall; break;
+  case 'f': groupModel = Group6_chall; break;
+  case 'g': groupModel = Group7_chall; break;
   default: groupModel = null;
 }
 
