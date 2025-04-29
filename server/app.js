@@ -298,48 +298,48 @@ if (groupModel) {
 
         
 
-let user = await User.findOne({ name });
+// let user = await User.findOne({ name });
 
-if (user) {
-  // Update only activity-related fields
-  user.steps = steps;
-  user.calories = calories;
-  user.walking = walking;
-  user.running = running;
-  user.cycling = cycling;
-  await user.save();
-} else {
-  // Create a new user
-  user = await User.create({
-    name,
-    age,
-    height,
-    weight,
-    gender,
-    steps,
-    calories,
-    walking,
-    running,
-    cycling,
-    group,
-  });
-}
+// if (user) {
+//   // Update only activity-related fields
+//   user.steps = steps;
+//   user.calories = calories;
+//   user.walking = walking;
+//   user.running = running;
+//   user.cycling = cycling;
+//   await user.save();
+// } else {
+//   // Create a new user
+//   user = await User.create({
+//     name,
+//     age,
+//     height,
+//     weight,
+//     gender,
+//     steps,
+//     calories,
+//     walking,
+//     running,
+//     cycling,
+//     group,
+//   });
+// }
 
 
- // const user = await User.create({
- //      name,
- //     // email,
- //      age,
- //      height,
- //      weight,
- //      gender,
- //        steps,
- //      calories,
- //      walking,
- //     running,
- //     cycling,
- //     group,
- //    });
+ const user = await User.create({
+      name,
+     // email,
+      age,
+      height,
+      weight,
+      gender,
+        steps,
+      calories,
+      walking,
+     running,
+     cycling,
+     group,
+    });
         
 
 
