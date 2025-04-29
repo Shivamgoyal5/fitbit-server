@@ -263,6 +263,31 @@ if (group === 'a') {
     await group7.save();
 }
 
+let groupModel;
+switch (group) {
+  case 'a': groupModel = Group1; break;
+  case 'b': groupModel = Group2; break;
+  case 'c': groupModel = Group3; break;
+  case 'd': groupModel = Group4; break;
+  case 'e': groupModel = Group5; break;
+  case 'f': groupModel = Group6; break;
+  case 'g': groupModel = Group7; break;
+  default: groupModel = null;
+}
+
+let groupData = {};
+if (groupModel) {
+    const doc = await groupModel.findOne();
+    if (doc) {
+        groupData = {
+            challenge: doc.Challenge || {},
+            quote: doc.Quote || "",
+            tips: doc.Tips || {}
+        };
+    }
+}
+
+
 
         
 
@@ -288,7 +313,8 @@ if (group === 'a') {
         res.json({
             profile: profileRes.data,
             steps: stepsRes.data,
-            calories: caloriesRes.data.summary            
+            calories: caloriesRes.data.summary,
+            groupInfo: groupData,
         });
     } catch (error) {
         console.error("Error fetching user profile:", error.response?.data || error.message);
