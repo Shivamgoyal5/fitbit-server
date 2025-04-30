@@ -167,10 +167,10 @@ if (GroupChallModel) {
         };
 
         // Safely calculate points
-        const step_con = challenge.steps ? 0.25 * (steps / challenge.steps) : 0;
-        const calories_con = challenge.caloriesBurned ? 0.25 * (calories / challenge.caloriesBurned) : 0;
-        const run_con = challenge.caloriesRunning ? 0.25 * (running / challenge.caloriesRunning) : 0;
-        const cycle_con = challenge.caloriesCycling ? 0.25 * (cycling / challenge.caloriesCycling) : 0;
+        const step_con = 0.25 * (steps / challenge.steps) : 0;
+        const calories_con = 0.25 * (calories / challenge.caloriesBurned) : 0;
+        const run_con = 0.25 * (running / challenge.caloriesRunning) : 0;
+        const cycle_con = 0.25 * (cycling / challenge.caloriesCycling) : 0;
 
         points = Math.round((step_con + calories_con + run_con + cycle_con) * 100) / 100;
     }
