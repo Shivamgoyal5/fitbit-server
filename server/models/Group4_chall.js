@@ -5,7 +5,7 @@ const Group4_challSchema = new mongoose.Schema({
   
 
   Challenge: {
-    steps: [String], // Array of step descriptions
+    steps: Number, // Array of step descriptions
     caloriesBurned: {
       type: Number,
       default: 0,
