@@ -73,16 +73,302 @@ app.get("/", async (req, res) => {
 
 
 // Step 2: Fetch Fitbit User Profile
-app.get("/profile", async (req, res) => {
-    // Look for token in Authorization header
-    const authHeader = req.headers.authorization;
+// app.get("/profile", async (req, res) => {
+//     // Look for token in Authorization header
+//     const authHeader = req.headers.authorization;
     
+//     const userId = a;
+//     if (!authHeader || !authHeader.startsWith("Bearer ")) {
+//         return res.status(401).send("Not authenticated");
+//     }
+
+//     const accessToken = authHeader.split(" ")[1]; // Get token from "Bearer <token>"
+
+//     try {
+//         const headers = {
+//             "Authorization": `Bearer ${accessToken}`
+//         };
+
+//         const today = new Date().toISOString().split("T")[0];
+
+//         // Make parallel requests for profile and steps
+//         const [profileRes , stepsRes, caloriesRes] = await Promise.all([
+//             axios.get(`https://api.fitbit.com/1/user/${userId}/profile.json`, { headers }),
+//             axios.get(`https://api.fitbit.com/1/user/${userId}/activities/steps/date/today/today.json`, { headers }),
+//             axios.get(`https://api.fitbit.com/1/user/${userId}/activities/date/${today}.json`, { headers })
+//         ]);
+//         console.log(profileRes.data);
+//         const name=profileRes.data.user.fullName;
+// //        const walkingObj = caloriesRes.data.summary.distances?.find(d => d.activity === "total");
+// // const walking = walkingObj ? walkingObj.distance : 0;
+
+//       const distances = caloriesRes.data.summary.distances || [];
+//         const walkingObj = distances.find(d => d.activity === "total");
+//         const runningObj = distances.find(d => d.activity === "veryActive");
+//         const cyclingObj = distances.find(d => d.activity === "moderatelyActive");
+
+//         const walking = walkingObj ? walkingObj.distance : 0;
+//         const running = runningObj ? runningObj.distance : 0;
+//         const cycling = cyclingObj ? cyclingObj.distance : 0;
+//         const age = profileRes.data.user.age;
+//         // const email = profileRes.data.user.email;
+//         const height = profileRes.data.user.height;
+//         const weight = profileRes.data.user.weight;
+//         const gender = profileRes.data.user.gender;
+//         const steps = stepsRes.data["activities-steps"][0].value||0;
+//         const calories = caloriesRes.data.summary.caloriesOut;
+
+//        const BMI=(weight)/((height/100)**2);
+
+//     let group;
+
+// if (gender === 'MALE') {
+//   if (age <= 50) {
+//     if (BMI < 18.5) {
+//       group = 'd';
+//     } else if (BMI >= 18.5 && BMI <= 24.9) {
+//       group = 'g';
+//     } else {
+//       group = 'e';
+//     }
+//   } else {
+//     group = 'f';
+//   }
+// } else {
+//   if (age <= 50) {
+//     if (BMI < 18.5) {
+//       group = 'a';
+//     } else if (BMI >= 18.5 && BMI <= 24.9) {
+//       group = 'g';
+//     } else {
+//       group = 'b';
+//     }
+//   } else {
+//     group = 'c';
+//   }
+// }
+
+// if (group === 'a') {
+//     // Find the existing Group1 document or create one if it doesn't exist
+//     let group1 = await Group1.findOne();
+
+//     if (!group1) {
+//         // If no Group1 document exists, create a new one
+//         group1 = new Group1({
+//             name: [name], // Initialize with the first name
+//                // Set admin if needed
+//         });
+//     } else {
+//         // If Group1 document exists, push the new name into the array
+//         group1.name.push(name);
+//     }
+
+//     await group1.save();
+// }
+
+        
+//         if (group === 'b') {
+//     // Find the existing Group1 document or create one if it doesn't exist
+//     let group2 = await Group2.findOne();
+
+//     if (!group2) {
+//         // If no Group1 document exists, create a new one
+//         group2 = new Group2({
+//             name: [name], // Initialize with the first name
+//                // Set admin if needed
+//         });
+//     } else {
+//         // If Group1 document exists, push the new name into the array
+//         group2.name.push(name);
+//     }
+
+//     await group2.save();
+// }
+//         if (group === 'c') {
+//     // Find the existing Group1 document or create one if it doesn't exist
+//     let group3 = await Group3.findOne();
+
+//     if (!group3) {
+//         // If no Group1 document exists, create a new one
+//         group3 = new Group3({
+//             name: [name], // Initialize with the first name
+//                // Set admin if needed
+//         });
+//     } else {
+//         // If Group1 document exists, push the new name into the array
+//         group3.name.push(name);
+//     }
+
+//     await group3.save();
+// }
+//         if (group === 'd') {
+//     // Find the existing Group1 document or create one if it doesn't exist
+//     let group4 = await Group4.findOne();
+
+//     if (!group4) {
+//         // If no Group1 document exists, create a new one
+//         group4 = new Group4({
+//             name: [name], // Initialize with the first name
+//                // Set admin if needed
+//         });
+//     } else {
+//         // If Group1 document exists, push the new name into the array
+//         group4.name.push(name);
+//     }
+
+//     await group4.save();
+// }
+//         if (group === 'e') {
+//     // Find the existing Group1 document or create one if it doesn't exist
+//     let group5 = await Group5.findOne();
+
+//     if (!group5) {
+//         // If no Group1 document exists, create a new one
+//         group5 = new Group5({
+//             name: [name], // Initialize with the first name
+//                // Set admin if needed
+//         });
+//     } else {
+//         // If Group1 document exists, push the new name into the array
+//         group5.name.push(name);
+//     }
+
+//     await group5.save();
+// }
+//         if (group === 'f') {
+//     // Find the existing Group1 document or create one if it doesn't exist
+//     let group6 = await Group6.findOne();
+
+//     if (!group6) {
+//         // If no Group1 document exists, create a new one
+//         group6 = new Group6({
+//             name: [name], // Initialize with the first name
+//                // Set admin if needed
+//         });
+//     } else {
+//         // If Group1 document exists, push the new name into the array
+//         group6.name.push(name);
+//     }
+
+//     await group6.save();
+// }
+//         if (group === 'g') {
+//     // Find the existing Group1 document or create one if it doesn't exist
+//     let group7 = await Group7.findOne();
+
+//     if (!group7) {
+//         // If no Group1 document exists, create a new one
+//         group7 = new Group7({
+//             name: [name], // Initialize with the first name
+//                // Set admin if needed
+//         });
+//     } else {
+//         // If Group1 document exists, push the new name into the array
+//         group7.name.push(name);
+//     }
+
+//     await group7.save();
+// }
+
+// let groupModel;
+// switch (group) {
+//   case 'a': groupModel = Group1_chall; break;
+//   case 'b': groupModel = Group2_chall; break;
+//   case 'c': groupModel = Group3_chall; break;
+//   case 'd': groupModel = Group4_chall; break;
+//   case 'e': groupModel = Group5_chall; break;
+//   case 'f': groupModel = Group6_chall; break;
+//   case 'g': groupModel = Group7_chall; break;
+//   default: groupModel = null;
+// }
+
+// let groupData = {};
+// if (groupModel) {
+//     const doc = await groupModel.findOne();
+//     if (doc) {
+//         groupData = {
+//             challenge: doc.Challenge || {},
+//             quote: doc.Quote || "",
+//             tips: doc.Tips || {}
+//         };
+//     }
+// }
+
+
+
+        
+
+// let user = await User.findOne({ name });
+
+// if (user) {
+//   user.steps = steps;
+//   user.calories = calories;
+//   user.walking = walking;
+//   user.running = running;
+//   user.cycling = cycling;
+//   await user.save();
+// } else {
+//   user = new User({
+//     name,
+//     age,
+//     height,
+//     weight,
+//     gender,
+//     steps,
+//     calories,
+//     walking,
+//     running,
+//     cycling,
+//     group
+//   });
+//   await user.save();
+// }
+
+
+
+//  // const user = await User.create({
+//  //      name,
+//  //     // email,
+//  //      age,
+//  //      height,
+//  //      weight,
+//  //      gender,
+//  //        steps,
+//  //      calories,
+//  //      walking,
+//  //     running,
+//  //     cycling,
+//  //     group,
+//  //    });     
+        
+
+
+//         res.json({
+//             profile: profileRes.data,
+//             steps: stepsRes.data,
+//             calories: caloriesRes.data.summary,
+//             groupInfo: groupData,
+//         });
+//     } catch (error) {
+//         console.error("Error fetching user profile:", error.response?.data || error.message);
+//         res.status(500).send("Error fetching user profile");
+//     }
+// });
+
+
+
+
+
+
+app.get("/profile", async (req, res) => {
+    const authHeader = req.headers.authorization;
     const userId = a;
+
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
         return res.status(401).send("Not authenticated");
     }
 
-    const accessToken = authHeader.split(" ")[1]; // Get token from "Bearer <token>"
+    const accessToken = authHeader.split(" ")[1];
 
     try {
         const headers = {
@@ -91,257 +377,105 @@ app.get("/profile", async (req, res) => {
 
         const today = new Date().toISOString().split("T")[0];
 
-        // Make parallel requests for profile and steps
-        const [profileRes , stepsRes, caloriesRes] = await Promise.all([
+        const [profileRes, stepsRes, caloriesRes] = await Promise.all([
             axios.get(`https://api.fitbit.com/1/user/${userId}/profile.json`, { headers }),
             axios.get(`https://api.fitbit.com/1/user/${userId}/activities/steps/date/today/today.json`, { headers }),
             axios.get(`https://api.fitbit.com/1/user/${userId}/activities/date/${today}.json`, { headers })
         ]);
-        console.log(profileRes.data);
-        const name=profileRes.data.user.fullName;
-//        const walkingObj = caloriesRes.data.summary.distances?.find(d => d.activity === "total");
-// const walking = walkingObj ? walkingObj.distance : 0;
 
-      const distances = caloriesRes.data.summary.distances || [];
-        const walkingObj = distances.find(d => d.activity === "total");
-        const runningObj = distances.find(d => d.activity === "veryActive");
-        const cyclingObj = distances.find(d => d.activity === "moderatelyActive");
-
-        const walking = walkingObj ? walkingObj.distance : 0;
-        const running = runningObj ? runningObj.distance : 0;
-        const cycling = cyclingObj ? cyclingObj.distance : 0;
+        const name = profileRes.data.user.fullName;
+        const distances = caloriesRes.data.summary.distances || [];
+        const walking = distances.find(d => d.activity === "total")?.distance || 0;
+        const running = distances.find(d => d.activity === "veryActive")?.distance || 0;
+        const cycling = distances.find(d => d.activity === "moderatelyActive")?.distance || 0;
         const age = profileRes.data.user.age;
-        // const email = profileRes.data.user.email;
         const height = profileRes.data.user.height;
         const weight = profileRes.data.user.weight;
         const gender = profileRes.data.user.gender;
-        const steps = stepsRes.data["activities-steps"][0].value||0;
+        const steps = stepsRes.data["activities-steps"][0]?.value || 0;
         const calories = caloriesRes.data.summary.caloriesOut;
 
-       const BMI=(weight)/((height/100)**2);
+        const BMI = weight / ((height / 100) ** 2);
 
-    let group;
+        // Determine group
+        let group;
+        if (gender === 'MALE') {
+            group = (age <= 50)
+                ? (BMI < 18.5 ? 'd' : (BMI <= 24.9 ? 'g' : 'e'))
+                : 'f';
+        } else {
+            group = (age <= 50)
+                ? (BMI < 18.5 ? 'a' : (BMI <= 24.9 ? 'g' : 'b'))
+                : 'c';
+        }
 
-if (gender === 'MALE') {
-  if (age <= 50) {
-    if (BMI < 18.5) {
-      group = 'd';
-    } else if (BMI >= 18.5 && BMI <= 24.9) {
-      group = 'g';
-    } else {
-      group = 'e';
-    }
-  } else {
-    group = 'f';
-  }
-} else {
-  if (age <= 50) {
-    if (BMI < 18.5) {
-      group = 'a';
-    } else if (BMI >= 18.5 && BMI <= 24.9) {
-      group = 'g';
-    } else {
-      group = 'b';
-    }
-  } else {
-    group = 'c';
-  }
-}
-
-if (group === 'a') {
-    // Find the existing Group1 document or create one if it doesn't exist
-    let group1 = await Group1.findOne();
-
-    if (!group1) {
-        // If no Group1 document exists, create a new one
-        group1 = new Group1({
-            name: [name], // Initialize with the first name
-               // Set admin if needed
-        });
-    } else {
-        // If Group1 document exists, push the new name into the array
-        group1.name.push(name);
-    }
-
-    await group1.save();
-}
-
-        
-        if (group === 'b') {
-    // Find the existing Group1 document or create one if it doesn't exist
-    let group2 = await Group2.findOne();
-
-    if (!group2) {
-        // If no Group1 document exists, create a new one
-        group2 = new Group2({
-            name: [name], // Initialize with the first name
-               // Set admin if needed
-        });
-    } else {
-        // If Group1 document exists, push the new name into the array
-        group2.name.push(name);
-    }
-
-    await group2.save();
-}
-        if (group === 'c') {
-    // Find the existing Group1 document or create one if it doesn't exist
-    let group3 = await Group3.findOne();
-
-    if (!group3) {
-        // If no Group1 document exists, create a new one
-        group3 = new Group3({
-            name: [name], // Initialize with the first name
-               // Set admin if needed
-        });
-    } else {
-        // If Group1 document exists, push the new name into the array
-        group3.name.push(name);
-    }
-
-    await group3.save();
-}
-        if (group === 'd') {
-    // Find the existing Group1 document or create one if it doesn't exist
-    let group4 = await Group4.findOne();
-
-    if (!group4) {
-        // If no Group1 document exists, create a new one
-        group4 = new Group4({
-            name: [name], // Initialize with the first name
-               // Set admin if needed
-        });
-    } else {
-        // If Group1 document exists, push the new name into the array
-        group4.name.push(name);
-    }
-
-    await group4.save();
-}
-        if (group === 'e') {
-    // Find the existing Group1 document or create one if it doesn't exist
-    let group5 = await Group5.findOne();
-
-    if (!group5) {
-        // If no Group1 document exists, create a new one
-        group5 = new Group5({
-            name: [name], // Initialize with the first name
-               // Set admin if needed
-        });
-    } else {
-        // If Group1 document exists, push the new name into the array
-        group5.name.push(name);
-    }
-
-    await group5.save();
-}
-        if (group === 'f') {
-    // Find the existing Group1 document or create one if it doesn't exist
-    let group6 = await Group6.findOne();
-
-    if (!group6) {
-        // If no Group1 document exists, create a new one
-        group6 = new Group6({
-            name: [name], // Initialize with the first name
-               // Set admin if needed
-        });
-    } else {
-        // If Group1 document exists, push the new name into the array
-        group6.name.push(name);
-    }
-
-    await group6.save();
-}
-        if (group === 'g') {
-    // Find the existing Group1 document or create one if it doesn't exist
-    let group7 = await Group7.findOne();
-
-    if (!group7) {
-        // If no Group1 document exists, create a new one
-        group7 = new Group7({
-            name: [name], // Initialize with the first name
-               // Set admin if needed
-        });
-    } else {
-        // If Group1 document exists, push the new name into the array
-        group7.name.push(name);
-    }
-
-    await group7.save();
-}
-
-let groupModel;
-switch (group) {
-  case 'a': groupModel = Group1_chall; break;
-  case 'b': groupModel = Group2_chall; break;
-  case 'c': groupModel = Group3_chall; break;
-  case 'd': groupModel = Group4_chall; break;
-  case 'e': groupModel = Group5_chall; break;
-  case 'f': groupModel = Group6_chall; break;
-  case 'g': groupModel = Group7_chall; break;
-  default: groupModel = null;
-}
-
-let groupData = {};
-if (groupModel) {
-    const doc = await groupModel.findOne();
-    if (doc) {
-        groupData = {
-            challenge: doc.Challenge || {},
-            quote: doc.Quote || "",
-            tips: doc.Tips || {}
+        // Store user in corresponding group collection
+        const groupModels = {
+            a: Group1,
+            b: Group2,
+            c: Group3,
+            d: Group4,
+            e: Group5,
+            f: Group6,
+            g: Group7
         };
-    }
-}
 
+        const GroupModel = groupModels[group];
+        if (GroupModel) {
+            const existing = await GroupModel.findOne({ name });
+            if (!existing) {
+                await new GroupModel({ name, point: 0 }).save();
+            }
+        }
 
+        // Fetch group challenge data
+        const groupChallModels = {
+            a: Group1_chall,
+            b: Group2_chall,
+            c: Group3_chall,
+            d: Group4_chall,
+            e: Group5_chall,
+            f: Group6_chall,
+            g: Group7_chall
+        };
 
-        
+        const GroupChallModel = groupChallModels[group];
+        let groupData = {};
+        if (GroupChallModel) {
+            const doc = await GroupChallModel.findOne();
+            if (doc) {
+                groupData = {
+                    challenge: doc.Challenge || {},
+                    quote: doc.Quote || "",
+                    tips: doc.Tips || {}
+                };
+            }
+        }
 
-let user = await User.findOne({ name });
-
-if (user) {
-  user.steps = steps;
-  user.calories = calories;
-  user.walking = walking;
-  user.running = running;
-  user.cycling = cycling;
-  await user.save();
-} else {
-  user = new User({
-    name,
-    age,
-    height,
-    weight,
-    gender,
-    steps,
-    calories,
-    walking,
-    running,
-    cycling,
-    group
-  });
-  await user.save();
-}
-
-
-
- // const user = await User.create({
- //      name,
- //     // email,
- //      age,
- //      height,
- //      weight,
- //      gender,
- //        steps,
- //      calories,
- //      walking,
- //     running,
- //     cycling,
- //     group,
- //    });     
-        
-
+        // Update or create user
+        let user = await User.findOne({ name });
+        if (user) {
+            user.steps = steps;
+            user.calories = calories;
+            user.walking = walking;
+            user.running = running;
+            user.cycling = cycling;
+            await user.save();
+        } else {
+            await new User({
+                name,
+                age,
+                height,
+                weight,
+                gender,
+                steps,
+                calories,
+                walking,
+                running,
+                cycling,
+                group
+            }).save();
+        }
 
         res.json({
             profile: profileRes.data,
@@ -354,6 +488,7 @@ if (user) {
         res.status(500).send("Error fetching user profile");
     }
 });
+
 
 app.listen(5000, () => console.log("Server running on http://localhost:5000"));
 
