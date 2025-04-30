@@ -192,43 +192,8 @@ if (GroupModel) {
 
 
         
-        // const step_con=0.25*(steps/(Challenge.steps));
-        // const calories_con=0.25*(calories/(Challenge.caloriesBurned));
-        // const run_con=0.25*(running/(Challenge.caloriesRunning));
-        // const cycle_con=0.25*(cycling/(Challenge.caloriesCycling));
-        // let points=step_con+calories_con+run_con+cycle_con;
-
-        // const GroupModel = groupModels[group];
-        // if (GroupModel) {
-        //     const existing = await GroupModel.findOne({ name });
-        //     if (!existing) {
-        //         await new GroupModel({ name, point: points }).save();
-        //     }
-        // }
-
-        // // Fetch group challenge data
-        // const groupChallModels = {
-        //     a: Group1_chall,
-        //     b: Group2_chall,
-        //     c: Group3_chall,
-        //     d: Group4_chall,
-        //     e: Group5_chall,
-        //     f: Group6_chall,
-        //     g: Group7_chall
-        // };
-
-        // const GroupChallModel = groupChallModels[group];
-        // let groupData = {};
-        // if (GroupChallModel) {
-        //     const doc = await GroupChallModel.findOne();
-        //     if (doc) {
-        //         groupData = {
-        //             challenge: doc.Challenge || {},
-        //             quote: doc.Quote || "",
-        //             tips: doc.Tips || {}
-        //         };
-        //     }
-        // }
+        
+       
 
         // Update or create user
         let user = await User.findOne({ name });
@@ -255,11 +220,19 @@ if (GroupModel) {
             }).save();
         }
 
+
+        let leaderboard = [];
+if (GroupModel) {
+    leaderboard = await GroupModel.find().sort({ point: -1 }).select("name point -_id");
+}
+
+
         res.json({
             profile: profileRes.data,
             steps: stepsRes.data,
             calories: caloriesRes.data.summary,
             groupInfo: groupData,
+            leaderboard
         });
     } catch (error) {
         console.error("Error fetching user profile:", error.response?.data || error.message);
