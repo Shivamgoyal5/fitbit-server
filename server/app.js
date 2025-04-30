@@ -176,6 +176,18 @@ if (GroupChallModel) {
     }
 }
 
+        const GroupModel = groupModels[group];
+if (GroupModel) {
+    const existing = await GroupModel.findOne({ name });
+    if (!existing) {
+        await new GroupModel({ name, point: points }).save();
+    } else {
+        existing.point = points;
+        await existing.save();
+    }
+}
+
+
 
 
 
