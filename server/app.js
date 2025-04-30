@@ -138,43 +138,85 @@ app.get("/profile", async (req, res) => {
             g: Group7
         };
 
-        const step_con=0.25*(steps/(Challenge.steps));
-        const calories_con=0.25*(calories/(Challenge.caloriesBurned));
-        const run_con=0.25*(running/(Challenge.caloriesRunning));
-        const cycle_con=0.25*(cycling/(Challenge.caloriesCycling));
-        let points=step_con+calories_con+run_con+cycle_con;
 
-        const GroupModel = groupModels[group];
-        if (GroupModel) {
-            const existing = await GroupModel.findOne({ name });
-            if (!existing) {
-                await new GroupModel({ name, point: points }).save();
-            }
-        }
 
-        // Fetch group challenge data
-        const groupChallModels = {
-            a: Group1_chall,
-            b: Group2_chall,
-            c: Group3_chall,
-            d: Group4_chall,
-            e: Group5_chall,
-            f: Group6_chall,
-            g: Group7_chall
+
+        // Fetch group challenge data first
+const groupChallModels = {
+    a: Group1_chall,
+    b: Group2_chall,
+    c: Group3_chall,
+    d: Group4_chall,
+    e: Group5_chall,
+    f: Group6_chall,
+    g: Group7_chall
+};
+
+const GroupChallModel = groupChallModels[group];
+let groupData = {};
+let points = 0;
+
+if (GroupChallModel) {
+    const doc = await GroupChallModel.findOne();
+    if (doc) {
+        const challenge = doc.Challenge || {};
+        groupData = {
+            challenge,
+            quote: doc.Quote || "",
+            tips: doc.Tips || {}
         };
 
-        const GroupChallModel = groupChallModels[group];
-        let groupData = {};
-        if (GroupChallModel) {
-            const doc = await GroupChallModel.findOne();
-            if (doc) {
-                groupData = {
-                    challenge: doc.Challenge || {},
-                    quote: doc.Quote || "",
-                    tips: doc.Tips || {}
-                };
-            }
-        }
+        // Safely calculate points
+        const step_con = challenge.steps ? 0.25 * (steps / challenge.steps) : 0;
+        const calories_con = challenge.caloriesBurned ? 0.25 * (calories / challenge.caloriesBurned) : 0;
+        const run_con = challenge.caloriesRunning ? 0.25 * (running / challenge.caloriesRunning) : 0;
+        const cycle_con = challenge.caloriesCycling ? 0.25 * (cycling / challenge.caloriesCycling) : 0;
+
+        points = Math.round((step_con + calories_con + run_con + cycle_con) * 100) / 100;
+    }
+}
+
+
+
+
+        
+        // const step_con=0.25*(steps/(Challenge.steps));
+        // const calories_con=0.25*(calories/(Challenge.caloriesBurned));
+        // const run_con=0.25*(running/(Challenge.caloriesRunning));
+        // const cycle_con=0.25*(cycling/(Challenge.caloriesCycling));
+        // let points=step_con+calories_con+run_con+cycle_con;
+
+        // const GroupModel = groupModels[group];
+        // if (GroupModel) {
+        //     const existing = await GroupModel.findOne({ name });
+        //     if (!existing) {
+        //         await new GroupModel({ name, point: points }).save();
+        //     }
+        // }
+
+        // // Fetch group challenge data
+        // const groupChallModels = {
+        //     a: Group1_chall,
+        //     b: Group2_chall,
+        //     c: Group3_chall,
+        //     d: Group4_chall,
+        //     e: Group5_chall,
+        //     f: Group6_chall,
+        //     g: Group7_chall
+        // };
+
+        // const GroupChallModel = groupChallModels[group];
+        // let groupData = {};
+        // if (GroupChallModel) {
+        //     const doc = await GroupChallModel.findOne();
+        //     if (doc) {
+        //         groupData = {
+        //             challenge: doc.Challenge || {},
+        //             quote: doc.Quote || "",
+        //             tips: doc.Tips || {}
+        //         };
+        //     }
+        // }
 
         // Update or create user
         let user = await User.findOne({ name });
