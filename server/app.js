@@ -223,7 +223,7 @@ if (GroupModel) {
 
         let leaderboard = [];
 if (GroupModel) {
-    leaderboard = await GroupModel.find().sort({ point: -1 }).select("name point -_id");
+    leaderboard = await GroupModel.find().sort({ point: 1 }).select("name point -_id");
 }
 
 
